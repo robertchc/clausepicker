@@ -1,0 +1,115 @@
+html,
+body {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  font-family: "Helvetica", Arial, sans-serif;
+}
+
+ul {
+  margin: 0;
+  padding: 0;
+}
+
+.ms-welcome__header {
+  padding: 0;
+  padding-bottom: 0;
+  padding-top: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.ms-welcome__main {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: nowrap;
+  align-items: center;
+  flex: 1 0 0;
+  padding: 0;
+}
+
+.ms-welcome__main > h2 {
+  width: 100%;
+  text-align: center;
+}
+
+.ms-welcome__features {
+  list-style-type: none;
+  margin-top: 0;
+}
+
+.ms-welcome__features.ms-List .ms-ListItem {
+  padding-bottom: 0;
+  display: flex;
+  font-family: "Helvetica", Arial, sans-serif;
+}
+
+.ms-welcome__features.ms-List .ms-ListItem > .ms-Icon {
+  margin-right: 10px;
+}
+
+.b {
+  font-weight: bold;
+}
+
+/* Additional Styles for Category Names and Content */
+.category {
+  margin-left: 20px;
+}
+
+.category-toggle {
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  font-size: 18px;
+  font-weight: bold;
+  margin-bottom: 10px;
+  padding: 0;
+  text-decoration: none;
+}
+
+.category-content {
+  margin-left: 20px;
+  display: none;
+  font-family: "Helvetica", Arial, sans-serif;
+}
+
+.category-toggle:hover {
+  text-decoration: underline;
+}
+
+.category-toggle-expanded::before {
+  content: "−";
+}
+
+.category-toggle::before {
+  content: "+";
+  margin-right: 5px;
+}
+
+.category-content-expanded {
+  display: block;
+  font-family: "Helvetica", Arial, sans-serif;
+}
+
+.clause-preview {
+    margin-bottom: 10px;
+    border: 1px solid #cccccc; /* Light grey outline */
+    background-color: #ffffff; /* White fill */
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.3); /* Darker drop shadow */
+    border-radius: 8px; /* Rounded corners */
+    padding: 10px; /* Adjust the padding value as needed */
+  }
+  
+  .indented {
+    margin-left: 20px; /* Adjust the indentation value as needed */
+  }
+
+.ms-welcome__features.ms-List .ms-ListItem::before {
+  content: counter(item) ". "; /* Use counter to display lettered list item */
+  counter-increment: item; /* Increment counter for each list item */
+  margin-right: 5px;
+  }
+  

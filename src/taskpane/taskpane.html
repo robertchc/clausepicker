@@ -1,0 +1,900 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- Office JavaScript API -->
+  <script type="text/javascript" src="https://appsforoffice.microsoft.com/lib/1.1/hosted/office.js"></script>
+
+  <!-- For more information on Fluent UI, visit https://developer.microsoft.com/fluentui#/. -->
+  <link rel="stylesheet" href="https://static2.sharepointonline.com/files/fabric/office-ui-fabric-core/11.0.0/css/fabric.min.css" />
+
+  <!-- Template styles -->
+  <link href="taskpane.css" rel="stylesheet" type="text/css" />
+
+  <style>
+    /* CSS styles */
+    .subcategory-toggle {
+      font-weight: bold;
+      font-size: 16px;
+    }
+
+    .category-content {
+      display: none;
+    }
+
+    .category-toggle::before {
+      content: "+";
+      margin-right: 5px;
+      color: crimson;
+      font-weight: bold;
+    }
+
+    .category-toggle-expanded::before {
+      content: "-";
+      font-weight: bold;
+    }
+
+    .category-toggle-expanded + .category-content {
+      display: block;
+    }
+
+    .subcategory-content {
+      display: none;
+      margin-left: 20px;
+    }
+
+    .subcategory-toggle::before {
+      content: "+";
+      margin-right: 5px;
+      color: blue;
+    }
+
+    .subcategory-toggle-expanded::before {
+      content: "-";
+      font-weight: bold;
+    }
+
+    .subcategory-toggle-expanded + .subcategory-content {
+      display: block;
+    }
+
+    .subsubcategory-content {
+      display: none;
+      margin-left: 20px;
+    }
+
+    .subsubcategory-toggle::before {
+      content: "+";
+      margin-right: 5px;
+    }
+
+    .subsubcategory-toggle-expanded::before {
+      content: "-";
+      font-weight: bold;
+    }
+
+    .subsubcategory-toggle-expanded + .subsubcategory-content {
+      display: block;
+    }
+  </style>
+
+  <style>
+    /* CSS styles */
+    .ms-welcome__header {
+      padding: 10px;
+      margin-bottom: 20px;
+    }
+  </style>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      const categoryToggles = document.querySelectorAll('.category-toggle, .subcategory-toggle, .subsubcategory-toggle');
+
+      categoryToggles.forEach(toggle => {
+        toggle.addEventListener('click', () => {
+          toggle.classList.toggle('category-toggle-expanded');
+          toggle.classList.toggle('subcategory-toggle-expanded');
+          toggle.classList.toggle('subsubcategory-toggle-expanded');
+
+          const content = toggle.nextElementSibling;
+          content.classList.toggle('category-content-expanded');
+          content.classList.toggle('subcategory-content-expanded');
+          content.classList.toggle('subsubcategory-content-expanded');
+        });
+      });
+    });
+  </script>
+</head>
+
+<body class="ms-font-m ms-welcome ms-Fabric">
+  <header class="ms-welcome__header ms-bgColor-neutralLighter">
+    <img width="60" height="60" src="https://cdrlaw.ca/wp-content/themes/cdrlaw/images/cdr-logo-home.png.webp"
+      alt="CDR Law" title="CDR Law" />
+  </header>
+  <section id="sideload-msg" class="ms-welcome__main">
+    <h4 class="ms-font-xl">Please <a target="_blank"
+        href="https://learn.microsoft.com/office/dev/add-ins/testing/test-debug-office-add-ins#sideload-an-office-add-in-for-testing">sideload</a>
+      your add-in to see app body.</h4>
+  </section>
+  <main id="app-body" class="ms-welcome__main" style="display: none;">
+    <!-- HTML structure for categories -->
+    <div class="category" id="category1">
+        <div class="category-toggle">Header (no clauses)</div>
+        <div class="category-content">
+          <!-- No clauses for this category -->
+        </div>
+      </div>
+      
+      <div class="category" id="category2">
+        <div class="category-toggle">Background</div>
+        <div class="category-content">
+          <div class="category" id="subcategory2-1">
+            <div class="category-toggle">Context</div>
+            <div class="category-content">
+              <!-- Clauses for Background > Context -->
+            </div>
+          </div>
+          <div class="category" id="subcategory2-2">
+            <div class="category-toggle">Optional Provisos</div>
+            <div class="category-content">
+              <!-- Clauses for Background > Optional Provisos -->
+            </div>
+          </div>
+          <div class="category" id="subcategory2-3">
+            <div class="category-toggle">Children</div>
+            <div class="category-content">
+              <!-- Clauses for Background > Children -->
+            </div>
+          </div>
+          <div class="category" id="subcategory2-4">
+            <div class="category-toggle">Leave</div>
+            <div class="category-content">
+              <!-- Clauses for Background > Leave -->
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <div class="category" id="category3">
+        <div class="category-toggle">Decision Making</div>
+        <div class="category-content">
+          <div class="category" id="subcategory3-1">
+            <div class="category-toggle">Day to Day Decisions</div>
+            <div class="category-content">
+              <!-- Clauses for Decision Making > Day to Day Decisions -->
+            </div>
+          </div>
+          <div class="category" id="subcategory3-2">
+            <div class="category-toggle">Shared Decision Making</div>
+            <div class="category-content">
+              <!-- Clauses for Decision Making > Shared Decision Making -->
+            </div>
+          </div>
+          <div class="category" id="subcategory3-3">
+            <div class="category-toggle">Sole Decision Making</div>
+            <div class="category-content">
+              <!-- Clauses for Decision Making > Sole Decision Making -->
+            </div>
+          </div>
+          <div class="category" id="subcategory3-4">
+            <div class="category-toggle">Emergency Medical Decisions</div>
+            <div class="category-content">
+              <!-- Clauses for Decision Making > Emergency Medical Decisions -->
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <div class="category" id="category4">
+        <div class="category-toggle">Information Access</div>
+        <div class="category-content">
+          <!-- Clauses for Information Access -->
+        </div>
+      </div>
+      <div class="category" id="category5">
+        <div class="category-toggle">Attendance</div>
+        <div class="category-content">
+          <!-- Clauses for Attendance -->
+        </div>
+      </div>
+      
+      <div class="category" id="category6">
+        <div class="category-toggle">Custody Upon a Party's Death</div>
+        <div class="category-content">
+          <!-- Clauses for Custody Upon a Party's Death -->
+        </div>
+      </div>
+      
+      <div class="category" id="category7">
+        <div class="category-toggle">Communication</div>
+        <div class="category-content">
+          <div class="category" id="subcategory7-1">
+            <div class="category-toggle">Communication Guidelines for the Parties</div>
+            <div class="category-content">
+              <!-- Clauses for Communication > Communication Guidelines for the Parties -->
+            </div>
+          </div>
+          <div class="category" id="subcategory7-2">
+            <div class="category-toggle">Communication With the Children</div>
+            <div class="category-content">
+              <!-- Clauses for Communication > Communication With the Children -->
+            </div>
+          </div>
+          <div class="category" id="subcategory7-3">
+            <div class="category-toggle">Higher Conflict Situations</div>
+            <div class="category-content">
+              <!-- Clauses for Communication > Higher Conflict Situations -->
+            </div>
+          </div>
+          <div class="category" id="subcategory7-4">
+            <div class="category-toggle">Communication Through Third Parties</div>
+            <div class="category-content">
+              <!-- Clauses for Communication > Communication Through Third Parties -->
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <div class="category" id="category8">
+        <div class="category-toggle">Travel</div>
+        <div class="category-content">
+          <div class="category" id="subcategory8-1">
+            <div class="category-toggle">Itinerary</div>
+            <div class="category-content">
+              <!-- Clauses for Travel > Itinerary -->
+            </div>
+          </div>
+          <div class="category" id="subcategory8-2">
+            <div class="category-toggle">Travel Inside Nova Scotia</div>
+            <div class="category-content">
+              <!-- Clauses for Travel > Travel Inside Nova Scotia -->
+            </div>
+          </div>
+          <div class="category" id="subcategory8-3">
+            <div class="category-toggle">Travel Outside Nova Scotia and Within Canada</div>
+            <div class="category-content">
+              <!-- Clauses for Travel > Travel Outside Nova Scotia and Within Canada -->
+            </div>
+          </div>
+          <div class="category" id="subcategory8-4">
+            <div class="category-toggle">International Travel</div>
+            <div class="category-content">
+              <!-- Clauses for Travel > International Travel -->
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <div class="category" id="category9">
+        <div class="category-toggle">Passports</div>
+        <div class="category-content">
+          <!-- Clauses for Passports -->
+        </div>
+      </div>
+      
+      <div class="category" id="category10">
+        <div class="category-toggle">Parenting Arrangements</div>
+        <div class="category-content">
+          <div class="category" id="subsubcategory10-8-1">
+            <div class="category-toggle">Primary Residence</div>
+            <div class="category-content">
+              <!-- Clauses for Parenting Arrangements > New Subsubcategory -->
+            </div>
+          </div>
+          <div class="category" id="subcategory10-1">
+            <div class="category-toggle">Shared Parenting</div>
+            <div class="category-content">
+              <div class="category" id="subsubcategory10-1-1">
+                <div class="category-toggle">Week On Week Off</div>
+                <div class="category-content">
+                  <!-- Clauses for Parenting Arrangements > Shared Parenting > Week On Week Off -->
+                </div>
+              </div>
+              <div class="category" id="subsubcategory10-1-2">
+                <div class="category-toggle">4/3/3/4</div>
+                <div class="category-content">
+                  <!-- Clauses for Parenting Arrangements > Shared Parenting > 4/3/3/4 -->
+                </div>
+              </div>
+              <div class="category" id="subsubcategory10-1-3">
+                <div class="category-toggle">Other Shared Parenting Schedule</div>
+                <div class="category-content">
+                  <!-- Clauses for Parenting Arrangements > Shared Parenting > Other Shared Parenting Schedule -->
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="category" id="subcategory10-2">
+            <div class="category-toggle">Supervised Parenting Time</div>
+            <div class="category-content">
+              <div class="category" id="subsubcategory10-2-1">
+                <div class="category-toggle">Third Party Supervisor</div>
+                <div class="category-content">
+                  <!-- Clauses for Parenting Arrangements > Supervised Parenting Time > Third Party Supervisor -->
+                </div>
+              </div>
+              <div class="category" id="subsubcategory10-2-2">
+                <div class="category-toggle">Veith House</div>
+                <div class="category-content">
+                  <!-- Clauses for Parenting Arrangements > Supervised Parenting Time > Veith House -->
+                </div>
+              </div>
+              <div class="category" id="subsubcategory10-2-3">
+                <div class="category-toggle">Supervised Exchange Program</div>
+                <div class="category-content">
+                  <!-- Clauses for Parenting Arrangements > Supervised Parenting Time > Supervised Exchange Program -->
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="category" id="subcategory10-3">
+            <div class="category-toggle">Contact Time</div>
+            <div class="category-content">
+              <!-- Clauses for Parenting Arrangements > Contact Time -->
+            </div>
+          </div>
+          <div class="category" id="subcategory10-4">
+            <div class="category-toggle">Interaction</div>
+            <div class="category-content">
+              <!-- Clauses for Parenting Arrangements > Interaction -->
+            </div>
+          </div>
+          <div class="category" id="subcategory10-5">
+            <div class="category-toggle">Transportation</div>
+            <div class="category-content">
+              <div class="category" id="subsubcategory10-5-1">
+                <div class="category-toggle">Transportation Provided by Parties</div>
+                <div class="category-content">
+                  <!-- Clauses for Parenting Arrangements > Transportation > Transportation Provided by Parties -->
+                </div>
+              </div>
+              <div class="category" id="subsubcategory10-5-2">
+                <div class="category-toggle">Third Party Transport</div>
+                <div class="category-content">
+                  <!-- Clauses for Parenting Arrangements > Transportation > Third Party Transport -->
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="category" id="subcategory10-6">
+            <div class="category-toggle">General Clauses</div>
+            <div class="category-content">
+              <div class="category" id="subsubcategory10-6-1">
+                <div class="category-toggle">Contact Information</div>
+                <div class="category-content">
+                  <!-- Clauses for Parenting Arrangements > General Clauses > Contact Information -->
+                </div>
+              </div>
+              <div class="category" id="subsubcategory10-6-2">
+                <div class="category-toggle">Scheduling Activities</div>
+                <div class="category-content">
+                  <!-- Clauses for Parenting Arrangements > General Clauses > Scheduling Activities -->
+                </div>
+              </div>
+              <div class="category" id="subsubcategory10-6-3">
+                <div class="category-toggle">Right of First Refusal</div>
+                <div class="category-content">
+                  <!-- Clauses for Parenting Arrangements > General Clauses > Right of First Refusal -->
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="category" id="subcategory10-7">
+            <div class="category-toggle">Conditions and Restrictions</div>
+            <div class="category-content">
+              <div class="category" id="subsubcategory10-7-1">
+                <div class="category-toggle">Safety</div>
+                <div class="category-content">
+                  <!-- Clauses for Parenting Arrangements > Conditions and Restrictions > Safety -->
+                </div>
+              </div>
+              <div class="category" id="subsubcategory10-7-2">
+                <div class="category-toggle">Alcohol and Drugs</div>
+                <div class="category-content">
+                  <!-- Clauses for Parenting Arrangements > Conditions and Restrictions > Alcohol and Drugs -->
+                </div>
+              </div>
+              <div class="category" id="subsubcategory10-7-3">
+                <div class="category-toggle">Corporal Punishment</div>
+                <div class="category-content">
+                  <!-- Clauses for Parenting Arrangements > Conditions and Restrictions > Corporal Punishment -->
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <div class="category" id="category11">
+        <div class="category-toggle">Grandparent Clauses</div>
+        <div class="category-content">
+          <div class="category" id="subcategory11-1">
+            <div class="category-toggle">Custody</div>
+            <div class="category-content">
+              <!-- Clauses for Grandparent Clauses > Custody -->
+            </div>
+          </div>
+          <div class="category" id="subcategory11-2">
+            <div class="category-toggle">Contact Time</div>
+            <div class="category-content">
+              <!-- Clauses for Grandparent Clauses > Contact Time -->
+            </div>
+          </div>
+          <div class="category" id="subcategory11-3">
+            <div class="category-toggle">Interaction</div>
+            <div class="category-content">
+              <!-- Clauses for Grandparent Clauses > Interaction -->
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <div class="category" id="category12">
+        <div class="category-toggle">Child Support</div>
+        <div class="category-content">
+          <div class="category" id="subcategory12-1">
+            <div class="category-toggle">Income</div>
+            <div class="category-content">
+              <div class="category" id="subsubcategory12-1-1">
+                <div class="category-toggle">Court Determined Income</div>
+                <div class="category-content">
+                  <!-- Clauses for Child Support > Income > Court Determined Income -->
+                </div>
+              </div>
+              <div class="category" id="subsubcategory12-1-2">
+                <div class="category-toggle">Income Below Tables</div>
+                <div class="category-content">
+                  <!-- Clauses for Child Support > Income > Income Below Tables -->
+                </div>
+              </div>
+              <div class="category" id="subsubcategory12-1-3">
+                <div class="category-toggle">Agreed Upon Income</div>
+                <div class="category-content">
+                  <!-- Clauses for Child Support > Income > Agreed Upon Income -->
+                </div>
+              </div>
+              <div class="category" id="subsubcategory12-1-4">
+                <div class="category-toggle">Average Income</div>
+                <div class="category-content">
+                  <!-- Clauses for Child Support > Income > Average Income -->
+                </div>
+              </div>
+              <div class="category" id="subsubcategory12-1-5">
+                <div class="category-toggle">Self-Employment</div>
+                <div class="category-content">
+                  <!-- Clauses for Child Support > Income > Self-Employment -->
+                </div>
+              </div>
+              <div class="category" id="subsubcategory12-1-6">
+                <div class="category-toggle">Imputing Income</div>
+                <div class="category-content">
+                  <!-- Clauses for Child Support > Income > Imputing Income -->
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="category" id="subcategory12-2">
+            <div class="category-toggle">Table Child Support</div>
+            <div class="category-content">
+              <div class="category" id="subsubcategory12-2-1">
+                <div class="category-toggle">Table - Paid Every Two Weeks</div>
+                <div class="category-content">
+                  <!-- Clauses for Child Support > Table Child Support > Table - Paid Every Two Weeks -->
+                </div>
+              </div>
+              <div class="category" id="subsubcategory12-2-2">
+                <div class="category-toggle">Rounding Up / Excess of Table Amount</div>
+                <div class="category-content">
+                  <!-- Clauses for Child Support > Table Child Support > Rounding Up / Excess of Table Amount -->
+                </div>
+              </div>
+              <div class="category" id="subsubcategory12-2-3">
+                <div class="category-toggle">Reasonable Arrangements</div>
+                <div class="category-content">
+                  <!-- Clauses for Child Support > Table Child Support > Reasonable Arrangements -->
+                </div>
+              </div>
+              <div class="category" id="subsubcategory12-2-4">
+                <div class="category-toggle">Shared Custody Set Off</div>
+                <div class="category-content">
+                  <!-- Clauses for Child Support > Table Child Support > Shared Custody Set Off -->
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="category" id="subcategory12-3">
+            <div class="category-toggle">Child Support Arrears</div>
+            <div class="category-content">
+              <!-- Clauses for Child Support > Child Support Arrears -->
+            </div>
+          </div>
+          <div class="category" id="subcategory12-4">
+            <div class="category-toggle">Retroactive Child Support</div>
+            <div class="category-content">
+              <!-- Clauses for Child Support > Retroactive Child Support -->
+            </div>
+          </div>
+          <div class="category" id="subcategory12-5">
+            <div class="category-toggle">Special or Extraordinary Expenses</div>
+            <div class="category-content">
+              <!-- Clauses for Child Support > Special or Extraordinary Expenses -->
+            </div>
+          </div>
+          <div class="category" id="subcategory12-6">
+            <div class="category-toggle">Undue Hardship</div>
+            <div class="category-content">
+              <!-- Clauses for Child Support > Undue Hardship -->
+            </div>
+          </div>
+          <div class="category" id="subcategory12-7">
+            <div class="category-toggle">Support for Children Over the Age of Majority</div>
+            <div class="category-content">
+              <div class="category" id="subsubcategory12-7-1">
+                <div class="category-toggle">Children Over the Age of Majority</div>
+                <div class="category-content">
+                  <!-- Clauses for Child Support > Support for Children Over the Age of Majority > Children Over the Age of Majority -->
+                </div>
+              </div>
+              <div class="category" id="subsubcategory12-7-2">
+                <div class="category-toggle">Termination of Child Support</div>
+                <div class="category-content">
+                  <!-- Clauses for Child Support > Support for Children Over the Age of Majority > Termination of Child Support -->
+                </div>
+              </div>
+              <div class="category" id="subsubcategory12-7-3">
+                <div class="category-toggle">Future Child Support/Support for a Child Over the Age of Majority</div>
+                <div class="category-content">
+                  <!-- Clauses for Child Support > Support for Children Over the Age of Majority > Future Child Support/Support for a Child Over the Age of Majority -->
+                </div>
+              </div>
+              <div class="category" id="subsubcategory12-7-4">
+                <div class="category-toggle">Payment of Child Support Directly to Child Over the Age of Majority</div>
+                <div class="category-content">
+                  <!-- Clauses for Child Support > Support for Children Over the Age of Majority > Payment of Child Support Directly to Child Over the Age of Majority -->
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="category" id="subcategory12-8">
+            <div class="category-toggle">Disclosure</div>
+            <div class="category-content">
+              <!-- Clauses for Child Support > Disclosure -->
+            </div>
+          </div>
+          <div class="category" id="subcategory12-9">
+            <div class="category-toggle">Administrative Recalculation of Child Support</div>
+            <div class="category-content">
+              <div class="category" id="subsubcategory12-9-1">
+                <div class="category-toggle">General</div>
+                <div class="category-content">
+                  <!-- Clauses for Child Support > Administrative Recalculation of Child Support > General -->
+                </div>
+              </div>
+              <div class="category" id="subsubcategory12-9-2">
+                <div class="category-toggle">Review and Recalculation</div>
+                <div class="category-content">
+                  <!-- Clauses for Child Support > Administrative Recalculation of Child Support > Review and Recalculation -->
+                </div>
+              </div>
+              <div class="category" id="subsubcategory12-9-3">
+                <div class="category-toggle">Recalculation Restrictions</div>
+                <div class="category-content">
+                  <!-- Clauses for Child Support > Administrative Recalculation of Child Support > Recalculation Restrictions -->
+                </div>
+              </div>
+              <div class="category" id="subsubcategory12-9-4">
+                <div class="category-toggle">Right of Object to Recalculated Amount</div>
+                <div class="category-content">
+                  <!-- Clauses for Child Support > Administrative Recalculation of Child Support > Right of Object to Recalculated Amount -->
+                </div>
+              </div>
+              <div class="category" id="subsubcategory12-9-5">
+                <div class="category-toggle">Notice to Recalculation Clerk</div>
+                <div class="category-content">
+                  <!-- Clauses for Child Support > Administrative Recalculation of Child Support > Notice to Recalculation Clerk -->
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <div class="category" id="category13">
+        <div class="category-toggle">Health Insurance</div>
+        <div class="category-content">
+          <!-- Clauses for Health Insurance -->
+        </div>
+      </div>
+      
+      <div class="category" id="category14">
+        <div class="category-toggle">Life Insurance</div>
+        <div class="category-content">
+          <div class="category" id="subcategory14-1">
+            <div class="category-toggle">Life Insurance - Child Support</div>
+            <div class="category-content">
+              <!-- Clauses for Life Insurance > Life Insurance - Child Support -->
+            </div>
+          </div>
+          <div class="category" id="subcategory14-2">
+            <div class="category-toggle">Life Insurance - Spousal Support</div>
+            <div class="category-content">
+              <!-- Clauses for Life Insurance > Life Insurance - Spousal Support -->
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <div class="category" id="category15">
+        <div class="category-toggle">Spousal Support</div>
+        <div class="category-content">
+          <div class="category" id="subcategory15-1">
+            <div class="category-toggle">Entitlement</div>
+            <div class="category-content">
+              <!-- Clauses for Spousal Support > Entitlement -->
+            </div>
+          </div>
+          <div class="category" id="subcategory15-2">
+            <div class="category-toggle">No Entitlement</div>
+            <div class="category-content">
+              <!-- Clauses for Spousal Support > No Entitlement -->
+            </div>
+          </div>
+          <div class="category" id="subcategory15-3">
+            <div class="category-toggle">No Ability to Pay</div>
+            <div class="category-content">
+              <!-- Clauses for Spousal Support > No Ability to Pay -->
+            </div>
+          </div>
+          <div class="category" id="subcategory15-4">
+            <div class="category-toggle">Periodic Payment</div>
+            <div class="category-content">
+              <!-- Clauses for Spousal Support > Periodic Payment -->
+            </div>
+          </div>
+          <div class="category" id="subcategory15-5">
+            <div class="category-toggle">Spousal Support Review</div>
+            <div class="category-content">
+              <!-- Clauses for Spousal Support > Spousal Support Review -->
+            </div>
+          </div>
+          <div class="category" id="subcategory15-6">
+            <div class="category-toggle">Spousal Support Arrears</div>
+            <div class="category-content">
+              <!-- Clauses for Spousal Support > Spousal Support Arrears -->
+            </div>
+          </div>
+          <div class="category" id="subcategory15-7">
+            <div class="category-toggle">Lump Sum Spousal Support</div>
+            <div class="category-content">
+              <!-- Clauses for Spousal Support > Lump Sum Spousal Support -->
+            </div>
+          </div>
+          <div class="category" id="subcategory15-8">
+            <div class="category-toggle">End of Spousal Support</div>
+            <div class="category-content">
+              <div class="category" id="subsubcategory15-8-1">
+                <div class="category-toggle">End - Conditional</div>
+                <div class="category-content">
+                  <!-- Clauses for Spousal Support > End of Spousal Support > End - Conditional -->
+                </div>
+              </div>
+              <div class="category" id="subsubcategory15-8-2">
+                <div class="category-toggle">End - Date</div>
+                <div class="category-content">
+                  <!-- Clauses for Spousal Support > End of Spousal Support > End - Date -->
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="category" id="subcategory15-9">
+            <div class="category-toggle">Reimbursement of Tax</div>
+            <div class="category-content">
+              <!-- Clauses for Spousal Support > Reimbursement of Tax -->
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <div class="category" id="category16">
+        <div class="category-toggle">Support Enforcement</div>
+        <div class="category-content">
+          <div class="category" id="subcategory16-1">
+            <div class="category-toggle">Director of Maintenance Enforcement</div>
+            <div class="category-content">
+              <!-- Clauses for Support Enforcement > Director of Maintenance Enforcement -->
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <div class="category" id="category17">
+        <div class="category-toggle">Property Division</div>
+        <div class="category-content">
+          <div class="category" id="subcategory17-1">
+            <div class="category-toggle">Matrimonial Assets Division</div>
+            <div class="category-content">
+              <!-- Clauses for Property Division > Matrimonial Assets Division -->
+            </div>
+          </div>
+          <div class="category" id="subcategory17-2">
+            <div class="category-toggle">Payment</div>
+            <div class="category-content">
+              <!-- Clauses for Property Division > Payment -->
+            </div>
+          </div>
+          <div class="category" id="subcategory17-3">
+            <div class="category-toggle">Matrimonial Home / Family Residence</div>
+            <div class="category-content">
+              <div class="category" id="subsubcategory17-3-1">
+                <div class="category-toggle">Exclusive Occupation/Use</div>
+                <div class="category-content">
+                  <!-- Clauses for Property Division > Matrimonial Home / Family Residence > Exclusive Occupation/Use -->
+                </div>
+              </div>
+              <div class="category" id="subsubcategory17-3-2">
+                <div class="category-toggle">Transfer of Title to Matrimonial Home</div>
+                <div class="category-content">
+                  <!-- Clauses for Property Division > Matrimonial Home / Family Residence > Transfer of Title to Matrimonial Home -->
+                </div>
+              </div>
+              <div class="category" id="subsubcategory17-3-3">
+                <div class="category-toggle">Release from Mortgage Covenants and Encumbrances</div>
+                <div class="category-content">
+                  <!-- Clauses for Property Division > Matrimonial Home / Family Residence > Release from Mortgage Covenants and Encumbrances -->
+                </div>
+              </div>
+              <div class="category" id="subsubcategory17-3-4">
+                <div class="category-toggle">Transfer of Matrimonial Home</div>
+                <div class="category-content">
+                  <!-- Clauses for Property Division > Matrimonial Home / Family Residence > Transfer of Matrimonial Home -->
+                </div>
+              </div>
+              <div class="category" id="subsubcategory17-3-5">
+                <div class="category-toggle">Sale of Matrimonial Home</div>
+                <div class="category-content">
+                  <!-- Clauses for Property Division > Matrimonial Home / Family Residence > Sale of Matrimonial Home -->
+                </div>
+              </div>
+              <div class="category" id="subsubcategory17-3-6">
+                <div class="category-toggle">Sale Where One Party Occupies the Home and the Other is the Sole Recipient of the Sale Proceeds</div>
+                <div class="category-content">
+                  <!-- Clauses for Property Division > Matrimonial Home / Family Residence > Sale Where One Party Occupies the Home and the Other is the Sole Recipient of the Sale Proceeds -->
+                </div>
+              </div>
+              <div class="category" id="subsubcategory17-3-7">
+                <div class="category-toggle">Sale by Auction</div>
+                <div class="category-content">
+                  <!-- Clauses for Property Division > Matrimonial Home / Family Residence > Sale by Auction -->
+                </div>
+              </div>
+              <div class="category" id="subsubcategory17-3-8">
+                <div class="category-toggle">Sale by Tender</div>
+                <div class="category-content">
+                  <!-- Clauses for Property Division > Matrimonial Home / Family Residence > Sale by Tender -->
+                </div>
+              </div>
+              <div class="category" id="subsubcategory17-3-9">
+                <div class="category-toggle">Joint Conduct of Sale</div>
+                <div class="category-content">
+                  <!-- Clauses for Property Division > Matrimonial Home / Family Residence > Joint Conduct of Sale -->
+                </div>
+              </div>
+              <div class="category" id="subsubcategory17-3-10">
+                <div class="category-toggle">Sole Conduct of Sale</div>
+                <div class="category-content">
+                  <!-- Clauses for Property Division > Matrimonial Home / Family Residence > Sole Conduct of Sale -->
+                </div>
+              </div>
+              <div class="category" id="subsubcategory17-3-11">
+                <div class="category-toggle">Expenses Pending Sale</div>
+                <div class="category-content">
+                  <!-- Clauses for Property Division > Matrimonial Home / Family Residence > Expenses Pending Sale -->
+                </div>
+              </div>
+              <div class="category" id="subsubcategory17-3-12">
+                <div class="category-toggle">Disposition of Matrimonial Home Sale Proceeds</div>
+                <div class="category-content">
+                  <!-- Clauses for Property Division > Matrimonial Home / Family Residence > Disposition of Matrimonial Home Sale Proceeds -->
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="category" id="subcategory17-4">
+            <div class="category-toggle">Vehicles</div>
+            <div class="category-content">
+              <!-- Clauses for Property Division > Vehicles -->
+            </div>
+          </div>
+          <div class="category" id="subcategory17-5">
+            <div class="category-toggle">Registered Retirement Savings Plans</div>
+            <div class="category-content">
+              <!-- Clauses for Property Division > Registered Retirement Savings Plans -->
+            </div>
+          </div>
+          <div class="category" id="subcategory17-6">
+            <div class="category-toggle">Joint Accounts</div>
+            <div class="category-content">
+              <!-- Clauses for Property Division > Joint Accounts -->
+            </div>
+          </div>
+          <div class="category" id="subcategory17-7">
+            <div class="category-toggle">Household Contents</div>
+            <div class="category-content">
+              <!-- Clauses for Property Division > Household Contents -->
+            </div>
+          </div>
+          <div class="category" id="subcategory17-8">
+            <div class="category-toggle">Debt Division</div>
+            <div class="category-content">
+              <!-- Clauses for Property Division > Debt Division -->
+            </div>
+          </div>
+          <div class="category" id="subcategory17-9">
+            <div class="category-toggle">Pension Division</div>
+            <div class="category-content">
+              <div class="category" id="subsubcategory17-9-1">
+                <div class="category-toggle">Pension Division at Source</div>
+                <div class="category-content">
+                  <!-- Clauses for Property Division > Pension Division > Pension Division at Source -->
+                </div>
+              </div>
+              <div class="category" id="subsubcategory17-9-2">
+                <div class="category-toggle">No Division of Pension</div>
+                <div class="category-content">
+                  <!-- Clauses for Property Division > Pension Division > No Division of Pension -->
+                </div>
+              </div>
+              <div class="category" id="subsubcategory17-9-3">
+                <div class="category-toggle">Canada Pension Plan</div>
+                <div class="category-content">
+                  <!-- Clauses for Property Division > Pension Division > Canada Pension Plan -->
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <div class="category" id="category18">
+        <div class="category-toggle">Concluding Clauses</div>
+        <div class="category-content">
+          <div class="category" id="subcategory18-1">
+            <div class="category-toggle">Variation</div>
+            <div class="category-content">
+              <!-- Clauses for Concluding Clauses > Variation -->
+            </div>
+          </div>
+          <div class="category" id="subcategory18-2">
+            <div class="category-toggle">Enforcement</div>
+            <div class="category-content">
+              <!-- Clauses for Concluding Clauses > Enforcement -->
+            </div>
+          </div>
+          <div class="category" id="subcategory18-3">
+            <div class="category-toggle">Consent</div>
+            <div class="category-content">
+              <!-- Clauses for Concluding Clauses > Consent -->
+            </div>
+          </div>
+          <div class="category" id="subcategory18-4">
+            <div class="category-toggle">Concillication Order</div>
+            <div class="category-content">
+              <div class="category" id="subsubcategory18-4-1">
+                <div class="category-toggle">Recitals for Concilliation Consent Orders</div>
+                <div class="category-content">
+                  <!-- Clauses for Concluding Clauses > Concillication Order > Recitals for Concilliation Consent Orders -->
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+  </main>
+
+  <script type="text/javascript" src="taskpane.js"></script>
+</body>
+
+</html>
